@@ -13,7 +13,7 @@ app.get('/ping', function (req, resp) {
 });
 
 app.get('/', function (req, resp) {
-  resp.sendFile(path.join(__dirname, 'build', 'index.html'));
+  resp.send({express : 'request sent back from Express'});
 });
 
 let port = process.env.PORT;
