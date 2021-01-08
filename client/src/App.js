@@ -9,12 +9,6 @@ import Notecard from "./views/Notecard";
 
 
 function App() {
-  // App State and API control
-  const [appState, setAppState] = useState({
-    response: '',
-    post: '',
-    responseToPost: ''
-  });
   //list of notes
   const [notesList, updateNotesList] = useState([]);
 
@@ -24,10 +18,10 @@ function App() {
         '/notes'
       );
       updateNotesList(result.data);
-      console.log("use effect called : " + result.data);
     };
  
     fetchData();
+    console.log();
   }, []);
    
   //note control
@@ -51,13 +45,23 @@ function App() {
     console.log(notesList);
   }
   
-function deleteNote(id) {
-  console.log("delete called, id/: " + id);
-  updateNotesList((prevValue) => {
-      return notesList.filter((note, index) => {
-        return index !== id;
-        });
-    });
+  function deleteNote(id) {
+    console.log("delete called, id/: " + id);
+    const delNote = notesList.filter((note, index) => {return index === id});
+    console.log(delNote[0]);
+
+    const fetchData = async () => {
+      const result = await axios.delete('/notes', { data: delNote[0]});
+      // updateNotesList(result.data);
+      console.log("use delete called");
+    };
+    fetchData();
+
+    // updateNotesList((prevValue) => {
+    //     return notesList.filter((note, index) => {
+    //       return index !== id;
+    //       });
+    //   });
   } 
 
   //return UI
