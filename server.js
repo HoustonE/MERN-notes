@@ -32,13 +32,9 @@ const notesSchema = new mongoose.Schema({
 
 const Note = new mongoose.model("Note", notesSchema);
 
-// Note.insertMany(notes);
-
-app.get('/ping', function (req, resp) {
-  return resp.send('pong');
-});
 
 app.get('/', function (req, resp) {
+  //TODO:: Home Page
   resp.send({express : 'request sent back from Express'});
 });
 
@@ -50,11 +46,9 @@ app.get('/notes', function (req, resp){
       resp.send(results); 
     }
   });
-  // resp.send(notes);
 });
 
 app.post('/notes', function(req, resp){
-  //todo add received note in todo -- redirect to return get /notes
   const newNote = new Note({
     title: req.body.title,
     content: req.body.content
@@ -62,20 +56,20 @@ app.post('/notes', function(req, resp){
 
   newNote.save();
   
-  resp.redirect('/notes');
+  resp.send("note added");
 });
 
 app.delete('/notes', function(req, resp){
   console.log("delete called " + req.body.id);
-  // Note.deleteOne({
-  //   title: req.body.id
-  // }, function(err){
-  //   if(err){
-  //     console.log(err);
-  //   } else {
-  //     console.log("item deleted");
-  //   }
-  // });
+  Note.findByIdAndDelete(req.body.id , function(err){
+    if(err){
+      console.log(err);
+    } else {
+      console.log("item deleted");
+    }
+  });
+
+  resp.send("item deleted successfully");
 });
 
 
