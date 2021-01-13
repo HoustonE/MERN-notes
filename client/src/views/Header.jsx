@@ -1,7 +1,10 @@
 import React from "react";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
 
 function Header() {
-  return (<div><header><h1>Notes</h1></header></div>);
+  return (<AppBar position="static"><Toolbar variant="dense">Notes</Toolbar></AppBar>);
 }
 
 export default Header;

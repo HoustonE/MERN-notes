@@ -5,13 +5,29 @@ import Footer from "./views/Footer";
 import Header from "./views/Header";
 import InputNote from "./views/InputNote";
 import Notecard from "./views/Notecard";
-// import Notes from "../notes";
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
+//***** React-CSS makeStyles
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 600,
+    margin: "auto"
+    // display: "grid",
+  }
+});
+
+//***** App
 function App() {
+  const classes = useStyles();
+  
   //list of notes
   const [notesList, updateNotesList] = useState([]);
 
+  
+  //page update
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
@@ -24,7 +40,7 @@ function App() {
     console.log();
   }, [notesList]);
    
-  //note control
+  //*****note handlers
   function addNote(newNote) {
     console.log("add note called passing: " + newNote);
 
@@ -67,13 +83,17 @@ function App() {
 
   } 
 
-  //return UI
-  return (<div>
+  //*****return UI
+  return (<Container maxWidth="md">
             <Header />
-            <InputNote addButton={addNote} />
-            {notesList.map((note, index) => (<Notecard id={index} key={index} title= {note.title} content= {note.content} deleteButton={deleteNote} updateNotesList={updateNotesList}/>))}
+            <Grid container spacing={3}>  
+              <Grid item xs={12} className={classes.root}>
+                <InputNote  addButton={addNote} /> 
+              </Grid>                                       
+                {notesList.map((note, index) => (<Grid item xs={12} sm={6}> <Notecard id={index} key={index} title= {note.title} content= {note.content} deleteButton={deleteNote} updateNotesList={updateNotesList}/></Grid>))}
+            </Grid>
   <Footer />
-  </div>);
+  </Container>);
 }
 
 export default App;

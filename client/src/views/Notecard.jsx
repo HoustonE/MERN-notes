@@ -1,13 +1,46 @@
 // note template 
 import React from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+//***** React-CSS makeStyles
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 function Notecard(props) {
-  return (<div className="note">
-  <h1>{props.title}</h1><p>{props.content}</p>
-  <button onClick={() => {
+  const classes = useStyles();
+ 
+ return (<Card className={classes.root}>
+  <CardContent>
+  <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+      {props.title}
+  </Typography>
+  <Typography className={classes.pos} variant="body2" color="textSecondary" component="p">
+      {props.content}
+  </Typography>
+  <Button onClick={() => {
           props.deleteButton(props.id);
-        }}> Delete </button>
-  </div>);
+        }}> Delete 
+  </Button>
+  </CardContent>
+  </Card>);
 }
 
 export default Notecard;
