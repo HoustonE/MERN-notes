@@ -90,7 +90,9 @@ function App() {
               <Grid item xs={12} className={classes.root}>
                 <InputNote  addButton={addNote} /> 
               </Grid>                                       
-                {notesList.map((note, index) => (<Grid item xs={12} sm={6}> <Notecard id={index} key={index} title= {note.title} content= {note.content} deleteButton={deleteNote} updateNotesList={updateNotesList}/></Grid>))}
+                {notesList.map((note, index) => (
+                  <Grid item xs={12} sm={6}> <Notecard id={index} key={index} title= {note.title} content= {note.content} deleteButton={deleteNote} updateNotesList={updateNotesList}/>
+                  </Grid>))}
             </Grid>
   <Footer />
   </Container>);

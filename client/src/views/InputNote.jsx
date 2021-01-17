@@ -14,14 +14,15 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   root: {
     maxWidth: 600,
-
-    position: "relative"
+    position: "relative",
+    marginTop: 12
   },
   inputs: {
     fontSize: 14,
     display: "grid"
   },
   addButt: {
+    float: "right"
   }
 });
 

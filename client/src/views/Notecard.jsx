@@ -1,5 +1,5 @@
 // note template 
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,31 +11,37 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
   title: {
-    fontSize: 14,
+    fontSize: 20,
   },
-  pos: {
+  content
+  : {
     marginBottom: 12,
   },
+  button: {
+    display: "block",
+    float: "right"
+  }
 });
 
 function Notecard(props) {
   const classes = useStyles();
  
+  const [isExpanded, setExpanded] = useState(true);
+
+  function expand() {
+    setExpanded(false);
+  }
+
  return (<Card className={classes.root}>
   <CardContent>
-  <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+  <Typography className={classes.title} variant="h2" >
       {props.title}
   </Typography>
-  <Typography className={classes.pos} variant="body2" color="textSecondary" component="p">
+  <Typography className={classes.content} variant="p" color="textSecondary" noWrap>
       {props.content}
   </Typography>
-  <Button onClick={() => {
+  <Button className={classes.button} onClick={() => {
           props.deleteButton(props.id);
         }}> Delete 
   </Button>

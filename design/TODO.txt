@@ -1,0 +1,12 @@
+TODO::
+
+--Design
+[ ] Customize AppBar, Footer etc.
+[ ] Punch Up Notecard CSS, Preview and Sizing
+[ ] Adjust Theme, Font and Color Scheme
+[ ] fix noWrap on Notecard
+
+-- Function
+[ ] Login Btn in AppBar
+[ ] Paginate Notes List
+[ ] Edit/PUT for Notes
