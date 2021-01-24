@@ -8,6 +8,7 @@ import Notecard from "./views/Notecard";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 
 //***** React-CSS makeStyles
@@ -15,7 +16,9 @@ const useStyles = makeStyles({
   root: {
     maxWidth: 600,
     margin: "auto"
-    // display: "grid",
+  },
+  page: {
+    margin: "auto"
   }
 });
 
@@ -25,19 +28,23 @@ function App() {
   
   //list of notes
   const [notesList, updateNotesList] = useState([]);
-
+  const [page, updatePage] = useState(1);
+  // const [loading, setLoading] = useState(false);
+  const [notesPerPage, updateNotesPerPage] = useState(6);
   
+    
   //page update
   useEffect(() => {
     const fetchData = async () => {
+      // setLoading(true);
       const result = await axios(
         '/notes'
       );
       updateNotesList(result.data);
+      // setLoading(false);
     };
- 
+    
     fetchData();
-    console.log();
   }, [notesList]);
    
   //*****note handlers
@@ -83,6 +90,18 @@ function App() {
 
   } 
 
+  //***** get current page
+  const indexOfLastNote = page * notesPerPage;
+  const indexOfFirstNote = indexOfLastNote - notesPerPage;
+  const currentNotes = notesList.slice(indexOfFirstNote, indexOfLastNote);
+  const numOfPages = Math.ceil(notesList.length / notesPerPage);
+
+
+  const handleChange = (event, value) => {
+    updatePage(value);
+  };
+
+
   //*****return UI
   return (<Container maxWidth="md">
             <Header />
@@ -90,10 +109,11 @@ function App() {
               <Grid item xs={12} className={classes.root}>
                 <InputNote  addButton={addNote} /> 
               </Grid>                                       
-                {notesList.map((note, index) => (
-                  <Grid item xs={12} sm={6}> <Notecard id={index} key={index} title= {note.title} content= {note.content} deleteButton={deleteNote} updateNotesList={updateNotesList}/>
+                {currentNotes.map((note, index) => (
+                  <Grid item xs={12} sm={6}> <Notecard id={index} key={index} title={note.title} content={note.content} deleteButton={deleteNote} updateNotesList={updateNotesList}/>
                   </Grid>))}
             </Grid>
+            <Pagination className={classes.page} count={numOfPages} page={page} onChange={handleChange} />
   <Footer />
   </Container>);
 }
